@@ -8,7 +8,7 @@ type Base = {
   _updatedAt: string
 }
 
-interface Image {
+export interface Image {
   _ref: string
   _type: 'reference'
 }

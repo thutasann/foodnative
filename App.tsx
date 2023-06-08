@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import HomeScreen from './screens/HomeScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import 'react-native-url-polyfill/auto'
 
 const Stack = createNativeStackNavigator()
 

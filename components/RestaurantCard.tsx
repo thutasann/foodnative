@@ -1,13 +1,14 @@
 import React from 'react'
 import { StyledImage, StyledText, StyledTouchableOpacity, StyledView } from '../commons'
 import { StarIcon, MapIcon } from 'react-native-heroicons/outline'
+import { Image } from '../types'
+import { urlFor } from '../sanity.client'
 
 interface IRestaurantCard {
   id: string
-  imgUrl: string
+  imgUrl: Image
   title: string
   rating: number
-  genre: string
   address: string
   short_description: string
   dishes: any[]
@@ -15,12 +16,12 @@ interface IRestaurantCard {
   lat: number
 }
 
-const RestaurantCard = ({ id, imgUrl, title, rating, genre, address, short_description, dishes, long, lat }: IRestaurantCard) => {
+const RestaurantCard = ({ id, imgUrl, title, rating, address, short_description, dishes, long, lat }: IRestaurantCard) => {
   return (
     <StyledTouchableOpacity className='bg-white mr-3 shadow-sm rounded-md'>
       <StyledImage
         source={{
-          uri: imgUrl,
+          uri: urlFor(imgUrl).url(),
         }}
         className='h-36 w-64 rounded-md'
       />
@@ -29,7 +30,7 @@ const RestaurantCard = ({ id, imgUrl, title, rating, genre, address, short_descr
         <StyledView className='flex-row items-center space-x-1'>
           <StarIcon color='green' opacity={0.5} size={22} />
           <StyledText className='text-xs text-gray-500'>
-            <StyledText>{rating}</StyledText> . {genre}
+            <StyledText>{rating}</StyledText>
           </StyledText>
         </StyledView>
         <StyledView className='flex-row items-center space-x-1'>

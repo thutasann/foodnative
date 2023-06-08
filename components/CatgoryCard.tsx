@@ -1,8 +1,10 @@
 import React from 'react'
 import { StyledImage, StyledText, StyledTouchableOpacity } from '../commons'
+import { urlFor } from '../sanity.client'
+import { Image } from '../types'
 
 interface ICategoryCard {
-  imgUrl: string
+  imgUrl: Image
   title: string
 }
 
@@ -11,7 +13,7 @@ const CatgoryCard: React.FC<ICategoryCard> = ({ imgUrl, title }) => {
     <StyledTouchableOpacity className='relative mr-2'>
       <StyledImage
         source={{
-          uri: imgUrl,
+          uri: urlFor(imgUrl).url(),
         }}
         className='h-24 w-24 rounded'
       />

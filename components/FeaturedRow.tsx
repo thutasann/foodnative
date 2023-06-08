@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyledScrollView, StyledText, StyledView } from '../commons'
 import { ArrowRightIcon } from 'react-native-heroicons/outline'
 import RestaurantCard from './RestaurantCard'
+import sanityClient, { urlFor } from '../sanity.client'
+import { Featured, Restaurants } from '../types'
 
 interface IFeaturedRow {
   id: string
@@ -10,7 +12,31 @@ interface IFeaturedRow {
   featuredCategory: string
 }
 
-const FeaturedRow = ({ id, title, description, featuredCategory }: IFeaturedRow) => {
+const FeaturedRow = ({ id, title, description }: IFeaturedRow) => {
+  const [restaurants, setRestaurants] = useState<Restaurants[]>([])
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
+      *[_type == "featured" && _id == $id]{
+            ...,
+          restaurants[] -> {
+            ...,
+            dishes[] ->,
+            type -> {
+              name
+            }
+          }
+      }[0]
+    `,
+        { id }
+      )
+      .then((data: Featured) => {
+        setRestaurants(data?.restaurants)
+      })
+  }, [])
+
   return (
     <StyledView>
       <StyledView className='mt-4 flex-row items-center justify-between px-4'>
@@ -27,19 +53,18 @@ const FeaturedRow = ({ id, title, description, featuredCategory }: IFeaturedRow)
         }}
         showsHorizontalScrollIndicator={false}
       >
-        {[1, 2, 3, 4, 5].map(idx => (
+        {restaurants?.map((restaurant, idx) => (
           <RestaurantCard
             key={idx}
-            id={'123'}
-            imgUrl={'https://t3.ftcdn.net/jpg/03/24/73/92/360_F_324739203_keeq8udvv0P2h1MLYJ0GLSlTBagoXS48.jpg'}
-            title={'Yo! Shushi!'}
-            rating={4.5}
-            genre={'Japanese'}
-            address={'1234 Main St'}
-            short_description={'This is a Test Description'}
-            dishes={[]}
-            long={20}
-            lat={0}
+            id={restaurant._id}
+            imgUrl={restaurant.image}
+            title={restaurant.name}
+            rating={restaurant.rating}
+            address={restaurant.address}
+            short_description={restaurant.short_description}
+            dishes={restaurant.dishes}
+            long={restaurant.long}
+            lat={restaurant.lat}
           />
         ))}
       </StyledScrollView>
