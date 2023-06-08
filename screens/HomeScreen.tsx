@@ -1,14 +1,22 @@
 import React from 'react'
-import { StyledImage, StyledSafeAreaView, StyledScrollView, StyledText, StyledTextInput, StyledView } from '../commons'
+import { StyledSafeAreaView, StyledScrollView } from '../commons'
+import Categories from '../components/Categories'
 import Header from '../components/Header'
 import Search from '../components/Search'
 
 const HomeScreen = () => {
   return (
-    <StyledSafeAreaView className='bg-white p-5'>
+    <StyledSafeAreaView className='bg-white p-5 flex-col'>
       <Header />
       <Search />
-      <StyledScrollView></StyledScrollView>
+      <StyledScrollView
+        className='bg-gray-100'
+        contentContainerStyle={{
+          paddingBottom: 100,
+        }}
+      >
+        <Categories />
+      </StyledScrollView>
     </StyledSafeAreaView>
   )
 }
