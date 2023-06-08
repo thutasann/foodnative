@@ -1,14 +1,15 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import { styled } from 'nativewind'
-
-const StyledText = styled(Text)
+import { StyledImage, StyledSafeAreaView, StyledScrollView, StyledText, StyledTextInput, StyledView } from '../commons'
+import Header from '../components/Header'
+import Search from '../components/Search'
 
 const HomeScreen = () => {
   return (
-    <View>
-      <StyledText className='text-red-500 bg-blue-300'>HomeScreen</StyledText>
-    </View>
+    <StyledSafeAreaView className='bg-white p-5'>
+      <Header />
+      <Search />
+      <StyledScrollView></StyledScrollView>
+    </StyledSafeAreaView>
   )
 }
 
