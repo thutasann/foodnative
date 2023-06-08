@@ -4,7 +4,7 @@ import { ChevronDownIcon, UserIcon } from 'react-native-heroicons/outline'
 
 function Header() {
   return (
-    <StyledView className='flex-row pb-3 items-center mx-4 space-x-2 px-2'>
+    <StyledView className='flex-row pb-3 items-center mx-4 space-x-2'>
       <StyledImage
         source={{
           uri: 'https://img.freepik.com/premium-vector/chef-food-restaurant-logo_7085-179.jpg',
