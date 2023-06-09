@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StyledImage, StyledScrollView, StyledText, StyledTouchableOpacity, StyledView } from '../commons'
 import { urlFor } from '../sanity.client'
@@ -7,12 +7,31 @@ import { StarIcon } from 'react-native-heroicons/solid'
 import { IParams } from '../types'
 import DishRow from '../components/DishRow'
 import BasketIcon from '../components/BasketIcon'
+import { useDispatch } from 'react-redux'
+import { setRestaurant } from '../slices/restaurantSlice'
 
 const RestaurantScreen = () => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const {
     params: { id, imgUrl, title, rating, address, short_description, dishes, long, lat },
   }: IParams = useRoute<any>()
+
+  useEffect(() => {
+    dispatch(
+      setRestaurant({
+        id,
+        imgUrl,
+        title,
+        rating,
+        address,
+        short_description,
+        dishes,
+        long,
+        lat,
+      })
+    )
+  }, [])
 
   return (
     <>
