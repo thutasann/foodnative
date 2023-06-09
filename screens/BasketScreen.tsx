@@ -9,7 +9,7 @@ import { XCircleIcon } from 'react-native-heroicons/solid'
 import { urlFor } from '../sanity.client'
 
 const BasketScreen = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const restaurant = useSelector(selectRestaurant)
   const dispatch = useDispatch()
   const basketTotal = useSelector(selectBasketTotal)
@@ -99,7 +99,7 @@ const BasketScreen = () => {
             </StyledText>
           </StyledView>
 
-          <StyledTouchableOpacity className='rounded-lg bg-[#00CCBB] p-4'>
+          <StyledTouchableOpacity onPress={() => navigation.navigate('Preparing')} className='rounded-lg bg-[#00CCBB] p-4'>
             <StyledText className='text-center text-white text-lg font-bold'>Place order</StyledText>
           </StyledTouchableOpacity>
         </StyledView>
