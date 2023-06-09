@@ -4,6 +4,8 @@ import Currency from 'react-currency-formatter'
 import { Image } from '../types'
 import { urlFor } from '../sanity.client'
 import { MinusCircleIcon, PlusCircleIcon } from 'react-native-heroicons/solid'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToBasket, removeFromBasket, selectBasketItems, selectBasketItemWithId } from '../slices/basketSlice'
 
 interface IDishRow {
   id: string
@@ -15,6 +17,26 @@ interface IDishRow {
 
 const DishRow = ({ id, name, description, price, image }: IDishRow) => {
   const [isPressed, setIsPressed] = useState<boolean>(false)
+  const dispatch = useDispatch()
+  const items: any[] = useSelector(state => selectBasketItemWithId(state, id))
+
+  const addItemToBasket = () => {
+    dispatch(
+      addToBasket({
+        id,
+        name,
+        description,
+        price,
+        image,
+      })
+    )
+  }
+
+  const removeItem = () => {
+    if (!items?.length) return
+    dispatch(removeFromBasket({ id }))
+  }
+
   return (
     <>
       <StyledTouchableOpacity
@@ -48,11 +70,11 @@ const DishRow = ({ id, name, description, price, image }: IDishRow) => {
       {isPressed && (
         <StyledView className='bg-white px-4'>
           <StyledView className='flex-row items-center space-x-2 pt-1 pb-3'>
-            <StyledTouchableOpacity>
-              <MinusCircleIcon color='#00CCBB' size={40} />
+            <StyledTouchableOpacity disabled={!items?.length} onPress={removeItem}>
+              <MinusCircleIcon color={items.length > 0 ? '#00CCBB' : 'gray'} size={40} />
             </StyledTouchableOpacity>
-            <StyledText>0</StyledText>
-            <StyledTouchableOpacity>
+            <StyledText>{items?.length}</StyledText>
+            <StyledTouchableOpacity onPress={addItemToBasket}>
               <PlusCircleIcon color='#00CCBB' size={40} />
             </StyledTouchableOpacity>
           </StyledView>
