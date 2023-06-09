@@ -5,6 +5,7 @@ import { XCircleIcon } from 'react-native-heroicons/solid'
 import { selectRestaurant } from '../slices/restaurantSlice'
 import { StyledImage, StyledSafeAreaView, StyledText, StyledTouchableOpacity, StyledView } from '../commons'
 import * as Progress from 'react-native-progress'
+import MapView, { Marker } from 'react-native-maps'
 
 const DeliveryScreen = () => {
   const navigation = useNavigation<any>()
@@ -37,6 +38,43 @@ const DeliveryScreen = () => {
 
           <StyledText className='mt-3 text-gray-500'>Your order at {restaurant.title} is being prepared.</StyledText>
         </StyledView>
+      </StyledSafeAreaView>
+
+      <MapView
+        initialRegion={{
+          latitude: restaurant.lat,
+          longitude: restaurant.long,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
+        }}
+        // @ts-ignore
+        className='flex-1 -mt-10 z-0'
+        mapType='mutedStandard'
+      >
+        <Marker
+          coordinate={{
+            latitude: restaurant.lat,
+            longitude: restaurant.long,
+          }}
+          title={restaurant.title}
+          description={restaurant.short_description}
+          identifier='origin'
+          pinColor='#00CCBB'
+        />
+      </MapView>
+      <StyledSafeAreaView className='bg-white flex-row items-center space-x-5 h-28'>
+        <StyledImage
+          source={{
+            uri: 'https://img.freepik.com/premium-vector/chef-food-restaurant-logo_7085-179.jpg',
+          }}
+          className='h-12 w-12 ml-5 p-4 rounded-full'
+        />
+        <StyledView className='flex-1'>
+          <StyledText className='text-lg'>James Ganar</StyledText>
+          <StyledText className='text-gray-400'>Your Rider</StyledText>
+        </StyledView>
+
+        <StyledText className='text-[#00CCBB] text-lg mr-5 font-bold'>Call</StyledText>
       </StyledSafeAreaView>
     </StyledView>
   )
