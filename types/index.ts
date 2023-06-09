@@ -47,3 +47,17 @@ export interface Featured extends Base {
   image: Image
   restaurants: Restaurants[]
 }
+
+export interface IParams {
+  params: {
+    id: string
+    imgUrl: Image
+    title: string
+    rating: number
+    address: string
+    short_description: string
+    dishes: Dish[]
+    long: number
+    lat: number
+  }
+}

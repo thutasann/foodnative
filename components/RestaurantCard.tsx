@@ -1,8 +1,10 @@
 import React from 'react'
 import { StyledImage, StyledText, StyledTouchableOpacity, StyledView } from '../commons'
 import { StarIcon, MapIcon } from 'react-native-heroicons/outline'
-import { Image } from '../types'
+import { Dish, Image } from '../types'
 import { urlFor } from '../sanity.client'
+import { useNavigation } from '@react-navigation/native'
+import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 interface IRestaurantCard {
   id: string
@@ -11,14 +13,31 @@ interface IRestaurantCard {
   rating: number
   address: string
   short_description: string
-  dishes: any[]
+  dishes: Dish[]
   long: number
   lat: number
 }
 
 const RestaurantCard = ({ id, imgUrl, title, rating, address, short_description, dishes, long, lat }: IRestaurantCard) => {
+  const navigation = useNavigation<any>()
+
   return (
-    <StyledTouchableOpacity className='bg-white mr-3 shadow-sm rounded-md'>
+    <StyledTouchableOpacity
+      onPress={() => {
+        navigation.navigate('Restaurant', {
+          id,
+          imgUrl,
+          title,
+          rating,
+          address,
+          short_description,
+          dishes,
+          long,
+          lat,
+        })
+      }}
+      className='bg-white mr-3 shadow-sm rounded-md'
+    >
       <StyledImage
         source={{
           uri: urlFor(imgUrl).url(),
