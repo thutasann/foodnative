@@ -9,6 +9,9 @@ const BasketIcon = () => {
   const items: any[] = useSelector(selectBasketItems)
   const navigation = useNavigation<any>()
   const basketTotal = useSelector(selectBasketTotal)
+
+  if (items?.length === 0) return null
+
   return (
     <StyledView className='absolute bottom-10 w-full z-50'>
       <StyledTouchableOpacity
