@@ -6,9 +6,24 @@ import Header from '../components/Header'
 import Search from '../components/Search'
 import { Featured } from '../types'
 import sanityClient from '../sanity.client'
+import axios from 'axios'
 
 const HomeScreen = () => {
   const [featuredCategories, setFeaturedCategories] = useState<Featured[]>([])
+
+  const [posts, setPosts] = useState([])
+  console.log(posts)
+
+  useEffect(() => {
+    axios
+      .get('https://thisquarterly.sg/wp-json/wp/v2/posts')
+      .then(response => {
+        setPosts(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching blog posts:', error)
+      })
+  }, [])
 
   useEffect(() => {
     sanityClient
